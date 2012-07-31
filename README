@@ -1,0 +1,48 @@
+AVARK is a round robin kernel curently for the AVR platform.
+
+The kernel consists of one header file i.e. avark.h . This has to be included by the user main c file.
+
+AVARK is being developed on the ATmega640 right now. It is using the TIMER2 of ATmega640 to schedule the processs. It can schedule upto 8 processes.
+
+To use AVARK, follow the instructions:
+
+1. Include avark.h
+
+2. Define the macro MAX_PROCESSES to the number of processes between which you want to do multitasking.
+eg: #define MAX_PROCESSES 2
+
+3. Declare the stack for each processes. Stack will be array of type K_STACK. Its length will be your desired stack memory.
+eg: K_STACK task1_stack[64];
+    K_STACK task2_stack[80];
+
+4. Define all the processes you want to execute simultaneously as normal functions. It is important that the functions neither return nor accept any arguments.
+
+eg: void task1()
+    {
+          ....
+          ....
+          ....
+    }
+
+    void task2()
+    {
+          ....
+          ....
+          ....
+    }
+
+
+
+3. Do everything else that you need to do that is declare other variables, initialise peripherals etc....
+
+4. Initialise the kernel using the K_init() function. K_init takes arguments in the following pattern
+    K_init(name of first process, address of last element of first process stack, ....same for otherprocesses);
+
+eg: K_init(task1, &task1_stack[63], task2, task2_stack[79]);
+
+5. call K_start() function.
+
+
+The kernel will now multitask between the two processes.
+
+Compile the main c file (from which you include avark.h) using avr-gcc compiler in the usual way.       
