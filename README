@@ -1,10 +1,20 @@
 AVARK is a round robin kernel curently for the AVR platform.
 
-The kernel consists of one header file i.e. avark.h . This has to be included by the user main c file.
+The kernel consists of four header files.
+1 avark.h
+2 semaphore.h
+3 terminal.h
+4 time.h
+
+avark.h has the main kernel. (the context switcher and scheduler and other important variable declarations)
+semaphore.h has code to implement semaphores
+terminal.h has code to implement command line interface; commands being passed down the USART.
+time.h has code to keep track of time (system clock); also needed for delays.
+
 
 AVARK is being developed on the ATmega640 right now. It is using the TIMER2 of ATmega640 to schedule the processs. It can schedule upto 8 processes.
 
-To use AVARK, follow the instructions:
+To use AVARK (minimalistic), follow the instructions:
 
 1. Include avark.h
 
