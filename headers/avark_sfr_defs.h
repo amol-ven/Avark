@@ -1,0 +1,18 @@
+#include<avr/io.h>
+
+#ifndef K_TASK_SWITCHING_SPEED
+	#define K_TASK_SWITCHING_SPEED 1
+#endif
+
+#ifdef __AVR_ATmega640__
+	#define TIMER_INTR_MASK_REG TIMSK0
+	#define TIMER_OVR_INTR_EN_BIT TOIE0
+	#define TIMER_COUNTER_CONTROL_REG TCCR0B
+	#if (K_TASK_SWITCHING_SPEED==1)
+		#define K_TIMER_PRESCALAR_BITS ((1<<CS02)|(1<<CS00))
+		#define K_TIMER_PRESCALAR 1024
+	#elif (K_TASK_SWITCHING_SPEED==2)
+		#define K_TIMER_PRESCALAR_BITS (1<<CS02)
+		#define K_TIMER_PRESCALAR 256
+	#endif
+#endif
